@@ -1,18 +1,18 @@
 {
-  "name": "homebridge-messenger",
-  "version": "0.0.8",
-  "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email)",
-  "author": "Paul-Olivier Trudeau (p-o.ca)",
+  "name": "@svobs/homebridge-messenger",
+  "version": "1.0.0",
+  "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email). Forked to add support for Pushover custom sounds",
+  "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "license": "MIT",
   "main": "index.js",
   "private": false,
-  "homepage": "https://github.com/potrudeau/homebridge-messenger",
+  "homepage": "https://github.com/svobs/homebridge-messenger",
   "bugs": {
-    "url": "https://github.com/potrudeau/homebridge-messenger/issues"
+    "url": "https://github.com/svobs/homebridge-messenger/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/potrudeau/homebridge-messenger.git"
+    "url": "https://github.com/svobs/homebridge-messenger.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,7 @@
     "homebridge-plugin",
     "homebridge",
     "pushover",
+    "sounds",
     "email",
     "mail",
     "ifttt",

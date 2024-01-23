@@ -14,7 +14,7 @@
 [![Licence](https://flat.badgen.net/npm/license/homebridge-messenger?color=red)](LICENSE)
 [![verified-by-homebridge](https://flat.badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 
-[Homebridge](http://homebridge.io) plugin which allow users to send messages from [HomeKit](https://developer.apple.com/homekit/).
+[Homebridge](http://homebridge.io) plugin which allow users to send messages from [HomeKit](https://developer.apple.com/homekit/). Forked from [Paul-Olivier Trudeau's original project](https://github.com/potrudeau/homebridge-messenger/security) to add support for Pushover custom sounds.
 
 
 ## Features
@@ -96,7 +96,7 @@ All switches can be used in scenes and automation.
     * type *(required)*: Must be `pushover`.
     * name *(required)*: Name of the switch and title of your message.
     * text *(required)*: Body of the message.
-    * sound *(facultative)*: Name of the sound that will notify the user. If no valid value is provided, the default `pushover` sound will be used. For no sound, use `silent`. The [Pushover API](https://pushover.net/api#sounds) contains the list of all available sounds.
+    * sound *(facultative)*: Name of the sound that will notify the user. This can either be one of the built-in Pushover sounds, or the name of a custom sound you have uploaded to your application. If no value is provided, the default `pushover` sound will be used. For no sound, use `none`. The [Pushover API](https://pushover.net/api#sounds) contains the list of built-in sounds. To retrieve a dictionary of names & descriptions of all available sounds for your application including your custom sounds, send a GET request to `https://api.pushover.net/1/sounds.json?token=YourAppToken` after replacing `YourAppToken` with your application token.
     * device *(facultative)*: The device name to send the message to. If not specified, the message will be send to all your devices. You can send to multiple devices by using a coma.
     * priority *(required)*: Priority of the message. Accepted values are `-2`, `-1`, `0`, `1` or `2`. You may refer to the [Pushover API](https://pushover.net/api#priority) for more details. Critical messages (`2`), are sent with the following parameters :
         * Retry : 60 seconds
