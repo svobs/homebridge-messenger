@@ -6,7 +6,7 @@ const HomebridgeMessengerError = require("../errors/HomebridgeMessengerError")
 const MESSENGER_NAME = "PushoverMessenger"
 const MESSAGE_RETRY_SECS = 60
 const MESSAGE_EXPIRE_SECS = 3600
-const HTML = 1
+const HTML_VERSION = 1
 
 module.exports = class PushoverMessenger {
     /**
@@ -115,7 +115,7 @@ module.exports = class PushoverMessenger {
             sound : this.message_sound,
             url : this.message_url,
             url_title : this.message_urltitle,
-            html: HTML,
+            html: HTML_VERSION,
             retry : MESSAGE_RETRY_SECS,
             expire: MESSAGE_EXPIRE_SECS,
         }
