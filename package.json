@@ -1,10 +1,14 @@
 {
   "name": "@svobs/homebridge-messenger",
+  "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "version": "1.0.0",
   "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email). Forked to add support for Pushover custom sounds",
-  "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "license": "MIT",
   "main": "./dist/index.js",
+  "engines": {
+    "homebridge": ">=0.2.5",
+    "node": ">=6.0.0"
+  },
   "homepage": "https://github.com/svobs/homebridge-messenger",
   "bugs": {
     "url": "https://github.com/svobs/homebridge-messenger/issues"
@@ -17,21 +21,6 @@
     "build": "babel src --out-dir dist --no-comments",
     "check:lint": "eslint src",
     "check:lint:fix": "eslint src --fix"
-  },
-  "keywords": [
-    "homebridge-plugin",
-    "homebridge",
-    "pushover",
-    "sounds",
-    "email",
-    "mail",
-    "ifttt",
-    "maker",
-    "webhooks"
-  ],
-  "engines": {
-    "homebridge": ">=0.2.5",
-    "node": ">=6.0.0"
   },
   "dependencies": {
     "axios": "^1.6.5",
@@ -48,5 +37,18 @@
     "babel-preset-minify": "^0.5.2",
     "eslint": "^8.56.0",
     "homebridge": "^1.7.0"
-  }
+  },
+  "keywords": [
+    "homebridge-messenger",
+    "homebridge-plugin",
+    "homebridge",
+    "pushcut",
+    "pushover",
+    "sounds",
+    "email",
+    "mail",
+    "ifttt",
+    "maker",
+    "webhooks"
+  ]
 }
