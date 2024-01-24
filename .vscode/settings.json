@@ -1,0 +1,5 @@
+{
+    "editor.indentSize": 4,
+    // In ESLint version 9, .eslintrc.* files will be deprecated.
+    "eslint.experimental.useFlatConfig": true
+}
