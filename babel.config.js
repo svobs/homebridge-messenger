@@ -10,9 +10,7 @@ module.exports = (api) => {
     /** @type {import("@babel/preset-env").Options} */
     const presetEnvConfig = {
         modules: false,
-        targets: {
-            node: "node >= 6",
-        },
+        targets: "node >= 6",
     }
 
     // Presets are applied right-to-left (reverse order)
