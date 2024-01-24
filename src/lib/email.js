@@ -1,77 +1,93 @@
-"use strict";
+"use strict"
 
-var Nodemailer = require('nodemailer');
+const Nodemailer = require("nodemailer")
 
 module.exports = class EmailMessenger {
-    constructor(emailRecipient, smtpServer, smtpPort, smtpSecure, smtpUsername, smtpPassword, messageTitle, messageText, messageRecipients) {
-        this.default_email = emailRecipient
-        this.smtp_server = smtpServer
-        this.smtp_port = smtpPort
-        this.smtp_secure = smtpSecure
-        this.smtp_username = smtpUsername
-        this.smtp_password = smtpPassword
-        this.message_title = messageTitle
-        this.message_text = messageText
-        this.message_recipients = messageRecipients
-
-        if (!this.default_email)
-            throw new Error(this.message_title + " : Email cannot be empty");
-
-        if (!this.smtp_server)
-            throw new Error(this.message_title + " : SMTP server cannot be empty");
-
-        if (!this.smtp_port)
-            this.smtp_port = 25;
-
-        if (this.smtp_port < 0 || this.smtp_port > 65535)
-           throw new Error(this.message_title + " : SMTP port must be between 0 and 65535");
-
-        if (!this.smtp_secure)
-            this.smtp_secure = false;
-
-        if (!this.message_title)
-            throw new Error(this.message_title + " : Message title cannot be empty");
-
-        if (!this.message_text)
-            throw new Error(this.message_title + " : Message text cannot be empty");
+  /**
+   * @param {string | undefined} emailRecipient
+   * @param {string | undefined} smtpServer
+   * @param {number | undefined} smtpPort
+   * @param {boolean | undefined} smtpSecure
+   * @param {string | undefined} smtpUsername
+   * @param {string | undefined} smtpPassword
+   * @param {string | undefined} messageTitle
+   * @param {string | undefined} messageText
+   * @param {string | undefined} messageRecipients
+   */
+  constructor(
+    emailRecipient,
+    smtpServer,
+    smtpPort,
+    smtpSecure,
+    smtpUsername,
+    smtpPassword,
+    messageTitle,
+    messageText,
+    messageRecipients,
+  ) {
+    if (!messageTitle) {
+      throw new Error("Message title cannot be empty")
     }
 
-
-    getRecipient() {
-      if (this.message_recipients)
-        return this.message_recipients;
-      else 
-        return this.default_email;
+    if (!emailRecipient) {
+      throw new Error(messageTitle + " : Email cannot be empty")
     }
 
-    
-    sendMessage() {  
+    if (!smtpServer) {
+      throw new Error(messageTitle + " : SMTP server cannot be empty")
+    }
 
-      if (this.smtp_username) {
-        var transport = Nodemailer.createTransport({
-          host: this.smtp_server, port: this.smtp_port,
-          auth: {
-            user: this.smtp_username, pass: this.smtp_password
-          },
-          tls: {          
-            requireTLS: this.smtp_secure
-          }          
-        });
-      }
-      else {
-        var transport = Nodemailer.createTransport({
-          host: this.smtp_server, port: this.smtp_port
-        });
-      }
-        
-      var mailOptions = {      
-        from: this.default_email, to: this.getRecipient(), subject: this.message_title, text: this.message_text
-      }
+    if (smtpPort && (smtpPort < 0 || smtpPort > 65535)) {
+      throw new Error(messageTitle + " : SMTP port must be between 0 and 65535")
+    }
+
+    if (!messageText) {
+      throw new Error(messageTitle + " : Message text cannot be empty")
+    }
+
+    this.default_email = emailRecipient
+    this.smtp_server = smtpServer
+    this.smtp_port = smtpPort ?? 25
+    this.smtp_secure = smtpSecure ?? false
+    this.smtp_username = smtpUsername
+    this.smtp_password = smtpPassword
+    this.message_title = messageTitle
+    this.message_text = messageText
+    this.message_recipients = messageRecipients
+  }
+
+  getRecipient() {
+    return this.message_recipients ?? this.default_email
+  }
   
-      transport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          throw new Error(error);
-        }
-      });  
+  sendMessage() {
+    /** @type {import('nodemailer/lib/smtp-transport').Options} */
+    const transportConfig = this.smtp_username ? {
+      host: this.smtp_server,
+      port: this.smtp_port,
+      auth: {
+        user: this.smtp_username,
+        pass: this.smtp_password,
+      },
+      tls: {          
+        requireTLS: this.smtp_secure,
+      },
+    } : {
+      host: this.smtp_server,
+      port: this.smtp_port,
     }
+
+    const transport = Nodemailer.createTransport(transportConfig)
+
+    transport.sendMail({      
+      from: this.default_email,
+      to: this.getRecipient,
+      subject: this.message_title,
+      text: this.message_text,
+    }, (error, info) => {
+      if (error) {
+        throw new Error(error)
+      }
+    })
+  }
 }
