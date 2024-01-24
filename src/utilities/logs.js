@@ -6,5 +6,5 @@ function taggedMessage(message) {
 }
 
 module.exports = {
-    taggedLog: taggedMessage,
+    taggedMessage,
 }

@@ -5,7 +5,7 @@ const PushoverMessenger = require("./lib/pushover")
 const EmailMessenger = require("./lib/email")
 const IftttMessenger = require("./lib/ifttt")
 const PushcutMessenger = require("./lib/pushcut")
-const {taggedLog} = require("./utilities/logs")
+const {taggedMessage} = require("./utilities/logs")
 
 /** @type {import("homebridge").API['hap']['Service']} */
 var Service
@@ -108,7 +108,7 @@ class HomebridgeMessenger {
      * @param {string} message
      */
     logMessage(message) {
-        this.log(taggedLog(message))
+        this.log(taggedMessage(message))
     }
 
     loadConfiguredMessages() {
