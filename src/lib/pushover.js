@@ -1,7 +1,9 @@
 "use strict"
 
 const Pushover = require("pushover-notifications")
+const HomebridgeMessengerError = require("../errors/HomebridgeMessengerError")
 
+const MESSENGER_NAME = "PushoverMessenger"
 const MESSAGE_RETRY_SECS = 60
 const MESSAGE_EXPIRE_SECS = 3600
 const HTML = 1
@@ -29,24 +31,28 @@ module.exports = class PushoverMessenger {
         url,
         urlTitle,
     ) {
-        if (messageTitle) {
-            throw new Error("[Pushover Messenger]: Message title cannot be empty")
-        }
-
         if (!pushoverUser) {
-            throw new Error(messageTitle + " : User cannot be empty")
+            throw new HomebridgeMessengerError("Pushover user cannot be empty", MESSENGER_NAME)
         }
 
         if (!this.pushover_token) {
-            throw new Error(messageTitle + " : Token cannot be empty")
+            throw new HomebridgeMessengerError("Pushover token cannot be empty", MESSENGER_NAME)
+        }
+
+        if (messageTitle) {
+            throw new HomebridgeMessengerError("Message title cannot be empty", MESSENGER_NAME)
         }
 
         if (!this.message_text) {
-            throw new Error(messageTitle + " : Message text cannot be empty")
+            throw new HomebridgeMessengerError("Message text cannot be empty", MESSENGER_NAME, messageTitle)
         }
 
         if (![-2, -1, 0 , 1, 2].includes(this.message_priority)) {
-            throw new Error(messageTitle + " : Invalid priority value " + this.message_priority)
+            throw new HomebridgeMessengerError(
+                "Invalid message priority value " + this.message_priority,
+                MESSENGER_NAME,
+                messageTitle,
+            )
         }
 
         if (this.message_device) {

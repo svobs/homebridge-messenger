@@ -1,6 +1,9 @@
 "use strict"
 
 const axios = require("axios").default
+const HomebridgeMessengerError = require("../errors/HomebridgeMessengerError")
+
+const MESSENGER_NAME = "PushcutMessenger"
 
 module.exports = class PushcutMessenger {
     /**
@@ -12,6 +15,10 @@ module.exports = class PushcutMessenger {
      * @param {string | undefined} messageActions
     */
     constructor(apiKey, notificationName, messageTitle, messageText, messageInput, messageActions) { 
+        if (!apiKey) {
+            throw new HomebridgeMessengerError("Pushcut API key cannot be empty", MESSENGER_NAME)
+        }
+
         this.pushcut_apikey = apiKey
         this.message_notification = notificationName
         this.message_title = messageTitle

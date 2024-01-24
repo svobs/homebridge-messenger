@@ -1,6 +1,9 @@
 "use strict"
 
 const Nodemailer = require("nodemailer")
+const HomebridgeMessengerError = require("../errors/HomebridgeMessengerError")
+
+const MESSENGER_NAME = "EmailMessenger"
 
 module.exports = class EmailMessenger {
     /**
@@ -25,24 +28,24 @@ module.exports = class EmailMessenger {
         messageText,
         messageRecipients,
     ) {
-        if (!messageTitle) {
-            throw new Error("Message title cannot be empty")
-        }
-
-        if (!emailRecipient) {
-            throw new Error(messageTitle + " : Email cannot be empty")
-        }
-
         if (!smtpServer) {
-            throw new Error(messageTitle + " : SMTP server cannot be empty")
+            throw new HomebridgeMessengerError("SMTP server cannot be empty", MESSENGER_NAME)
         }
 
         if (smtpPort && (smtpPort < 0 || smtpPort > 65535)) {
-            throw new Error(messageTitle + " : SMTP port must be between 0 and 65535")
+            throw new HomebridgeMessengerError("SMTP port must be between 0 and 65535", MESSENGER_NAME)
+        }
+
+        if (!messageTitle) {
+            throw new HomebridgeMessengerError("Message title cannot be empty", MESSENGER_NAME)
         }
 
         if (!messageText) {
-            throw new Error(messageTitle + " : Message text cannot be empty")
+            throw new HomebridgeMessengerError("Message text cannot be empty", MESSENGER_NAME, messageTitle)
+        }
+
+        if (!emailRecipient) {
+            throw new HomebridgeMessengerError("Email cannot be empty", MESSENGER_NAME, messageTitle)
         }
 
         this.default_email = emailRecipient
