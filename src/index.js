@@ -176,7 +176,7 @@ class HomebridgeMessenger {
                                     throw new Error(`${messageName}: Invalid message type value.`)
                             }
               
-                            this.log(`${messageName}: Message sent to ${messenger.recipient}`)
+                            this.log(`${messageName}: Message sent to ${messenger.getRecipient()}`)
                             messenger.sendMessage()
                         }
 
