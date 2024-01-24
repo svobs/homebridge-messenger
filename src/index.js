@@ -5,6 +5,7 @@ const PushoverMessenger = require("./lib/pushover")
 const EmailMessenger = require("./lib/email")
 const IftttMessenger = require("./lib/ifttt")
 const PushcutMessenger = require("./lib/pushcut")
+const {taggedLog} = require("./utilities/logs")
 
 /** @type {import("homebridge").API['hap']['Service']} */
 var Service
@@ -74,7 +75,7 @@ class HomebridgeMessenger {
 
         // Add main switch to Homebridge
         this.serviceMainSwitch = new Service.Switch(this.config.name, 0)
-        this.log("Added Main Switch: " + this.config.name)
+        this.logMessage("Added Main Switch: " + this.config.name)
 
         // Initialize cache
         this.cacheDirectory = HomebridgeAPI.user.persistPath()
@@ -94,13 +95,20 @@ class HomebridgeMessenger {
 
         if (!itemInCache) {
             this.serviceMainSwitch.setCharacteristic(Characteristic.On, false)
-            this.log("Main Switch: OFF")
+            this.logMessage("Main Switch: OFF")
         } else {
             this.serviceMainSwitch.setCharacteristic(Characteristic.On, true)
-            this.log("Main Switch: ON")
+            this.logMessage("Main Switch: ON")
         }
 
         this.loadConfiguredMessages()
+    }
+
+    /**
+     * @param {string} message
+     */
+    logMessage(message) {
+        this.log(taggedLog(message))
     }
 
     loadConfiguredMessages() {
@@ -111,13 +119,13 @@ class HomebridgeMessenger {
             const messageType = _messageType.toLowerCase()
 
             const serviceMessageSwitch = new Service.Switch(messageName , index + 100)
-            this.log(`Added ${messageType}: ${messageName}`)
+            this.logMessage(`Added ${messageType}: ${messageName}`)
 
             serviceMessageSwitch.getCharacteristic(Characteristic.On)
                 .on("set", function (value, callback) {
                     if (!!value) {
                         if (!this.isOn) {
-                            this.log(`${messageName}: Message not sent. Master switch is off.`)
+                            this.logMessage(`${messageName}: Message not sent. Master switch is off.`)
                         } else {
                             /** @type {EmailMessenger | IftttMessenger | PushcutMessenger | PushoverMessenger} */
                             let messenger
@@ -176,7 +184,7 @@ class HomebridgeMessenger {
                                     throw new Error(`${messageName}: Invalid message type value.`)
                             }
               
-                            this.log(`${messageName}: Message sent to ${messenger.getRecipient()}`)
+                            this.logMessage(`${messageName}: Message sent to ${messenger.getRecipient()}`)
                             messenger.sendMessage()
                         }
 
@@ -204,7 +212,7 @@ class HomebridgeMessenger {
     setOnCharacteristicHandler(value, callback) {
         this.isOn = value
         this.storage.setItemSync(this.config.name, value)
-        this.log("Main Switch status"+ " : " + value)
+        this.logMessage("Main Switch status"+ " : " + value)
         callback(null)
     }
 
