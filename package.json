@@ -14,7 +14,7 @@
     "url": "https://github.com/svobs/homebridge-messenger.git"
   },
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir dist --no-comments",
     "check:lint": "eslint src",
     "check:lint:fix": "eslint src --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -46,6 +46,7 @@
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.8",
     "@stylistic/eslint-plugin-js": "^1.5.4",
+    "babel-preset-minify": "^0.5.2",
     "eslint": "^8.56.0",
     "homebridge": "^1.7.0"
   }

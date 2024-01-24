@@ -17,6 +17,7 @@ module.exports = (api) => {
     /** @type {import("@babel/core").TransformOptions['presets']} */
     const presets = [
         ["@babel/preset-env", presetEnvConfig],
+        ["minify"],
     ]
 
     return {
