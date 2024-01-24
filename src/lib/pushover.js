@@ -35,7 +35,7 @@ module.exports = class PushoverMessenger {
             throw new HomebridgeMessengerError("Pushover user cannot be empty", MESSENGER_NAME)
         }
 
-        if (!this.pushover_token) {
+        if (!pushoverToken) {
             throw new HomebridgeMessengerError("Pushover token cannot be empty", MESSENGER_NAME)
         }
 
@@ -43,20 +43,20 @@ module.exports = class PushoverMessenger {
             throw new HomebridgeMessengerError("Message title cannot be empty", MESSENGER_NAME)
         }
 
-        if (!this.message_text) {
+        if (!messageText) {
             throw new HomebridgeMessengerError("Message text cannot be empty", MESSENGER_NAME, messageTitle)
         }
 
-        if (![-2, -1, 0 , 1, 2].includes(this.message_priority)) {
+        if (![-2, -1, 0 , 1, 2].includes(messagePriority)) {
             throw new HomebridgeMessengerError(
-                "Invalid message priority value " + this.message_priority,
+                "Invalid message priority value " + messagePriority,
                 MESSENGER_NAME,
                 messageTitle,
             )
         }
 
-        if (this.message_device) {
-            this.message_device = this.message_device.replace(/\s/g, "")
+        if (messageDevice) {
+            this.message_device = messageDevice.replace(/\s/g, "")
         }
 
         this.pushover_user = pushoverUser
