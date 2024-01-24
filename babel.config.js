@@ -5,23 +5,23 @@
  * @return {import("@babel/core").TransformOptions}
  */
 module.exports = (api) => {
-  api.cache.forever()
+    api.cache.forever()
 
-  /** @type {import("@babel/preset-env").Options} */
-  const presetEnvConfig = {
-    modules: false,
-    targets: {
-      node: "node >= 6"
-    },
-  };
+    /** @type {import("@babel/preset-env").Options} */
+    const presetEnvConfig = {
+        modules: false,
+        targets: {
+            node: "node >= 6",
+        },
+    }
 
-  // Presets are applied right-to-left (reverse order)
-  /** @type {import("@babel/core").TransformOptions['presets']} */
-  const presets = [
-    ["@babel/preset-env", presetEnvConfig],
-  ];
+    // Presets are applied right-to-left (reverse order)
+    /** @type {import("@babel/core").TransformOptions['presets']} */
+    const presets = [
+        ["@babel/preset-env", presetEnvConfig],
+    ]
 
-  return {
-    presets,
-  }
+    return {
+        presets,
+    }
 }
