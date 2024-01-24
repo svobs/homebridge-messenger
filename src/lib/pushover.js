@@ -2,8 +2,8 @@
 
 const Pushover = require("pushover-notifications")
 
-const MESSAGE_RETRY = 60
-const MESSAGE_EXPIRE = 3600
+const MESSAGE_RETRY_SECS = 60
+const MESSAGE_EXPIRE_SECS = 3600
 const HTML = 1
 
 module.exports = class PushoverMessenger {
@@ -110,8 +110,8 @@ module.exports = class PushoverMessenger {
             url : this.message_url,
             url_title : this.message_urltitle,
             html: HTML,
-            retry : MESSAGE_RETRY,
-            expire: MESSAGE_EXPIRE,
+            retry : MESSAGE_RETRY_SECS,
+            expire: MESSAGE_EXPIRE_SECS,
         }
 
         pushover.send(message, (error, _result) => {
