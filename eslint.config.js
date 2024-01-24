@@ -3,6 +3,10 @@ const stylisticJs = require("@stylistic/eslint-plugin-js")
 /** @type {import("eslint").Linter.FlatConfig[]} */
 const config = [
     {
+        ignores: [
+            "dist/**",
+            "node_modules/**",
+        ],
         plugins: {
             "@stylistic/js": stylisticJs,
         },
