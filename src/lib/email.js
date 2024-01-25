@@ -89,7 +89,7 @@ module.exports = class EmailMessenger {
             text: this.message_text,
         }, (error, info) => {
             if (error) {
-                throw new Error(error)
+                throw error
             }
         })
     }
