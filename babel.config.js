@@ -14,10 +14,11 @@ module.exports = (api) => {
     }
 
     // Presets are applied right-to-left (reverse order)
+    // Source: https://github.com/babel/babel/blob/main/babel.config.js#L177-L181
     /** @type {import("@babel/core").TransformOptions['presets']} */
     const presets = [
-        ["@babel/preset-env", presetEnvConfig],
         ["minify"],
+        ["@babel/preset-env", presetEnvConfig],
     ]
 
     return {
