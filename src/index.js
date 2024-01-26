@@ -147,9 +147,9 @@ class HomebridgeMessenger {
                                         this.config.services.email.smtpSecure, 
                                         this.config.services.email.smtpUsername, 
                                         this.config.services.email.smtpPassword, 
-                                        this.messages[x].name,
-                                        this.messages[x].text, 
-                                        this.messages[x].recipients,
+                                        message.name,
+                                        message.text, 
+                                        message.recipients,
                                     )
                                     break
 
@@ -157,34 +157,34 @@ class HomebridgeMessenger {
                                     messenger = new PushoverMessenger(
                                         this.config.services.pushover.user, 
                                         this.config.services.pushover.token,
-                                        this.messages[x].name,
-                                        this.messages[x].text,
-                                        this.messages[x].priority,
-                                        this.messages[x].device,
-                                        this.messages[x].sound,
-                                        this.messages[x].url,
-                                        this.messages[x].urltitle,
+                                        message.name,
+                                        message.text,
+                                        message.priority,
+                                        message.device,
+                                        message.sound,
+                                        message.url,
+                                        message.urltitle,
                                     )
                                     break
 
                                 case "ifttt":
                                     messenger = new IftttMessenger(
                                         this.config.services.ifttt.key,
-                                        this.messages[x].event,
-                                        this.messages[x].value1,
-                                        this.messages[x].value2,
-                                        this.messages[x].value3,
+                                        message.event,
+                                        message.value1,
+                                        message.value2,
+                                        message.value3,
                                     )
                                     break
 
                                 case "pushcut":
                                     messenger = new PushcutMessenger(
                                         this.config.services.pushcut.apikey,
-                                        this.messages[x].notification,
-                                        this.messages[x].title,
-                                        this.messages[x].text,
-                                        this.messages[x].input,
-                                        this.messages[x].actions,
+                                        message.notification,
+                                        message.title,
+                                        message.text,
+                                        message.input,
+                                        message.actions,
                                     )
                                     break
 
