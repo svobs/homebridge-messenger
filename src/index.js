@@ -131,7 +131,7 @@ class HomebridgeMessenger {
 
             serviceMessageSwitch.getCharacteristic(Characteristic.On)
                 .on("set", function (value, callback) {
-                    if (!!value) {
+                    if (value === true) {
                         if (!this.isOn) {
                             this.logMessage(`${messageName}: Message not sent. Master switch is off.`)
                         } else {
