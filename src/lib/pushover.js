@@ -55,19 +55,15 @@ module.exports = class PushoverMessenger {
             )
         }
 
-        if (messageDevice) {
-            this.message_device = messageDevice.replace(/\s/g, "")
-        }
-
         this.pushover_user = pushoverUser
         this.pushover_token = pushoverToken
         this.message_title = messageTitle
         this.message_text = messageText
         this.message_priority = messagePriority
-        this.message_device = messageDevice
         this.message_sound = messageSound
         this.message_url = url
         this.message_urltitle = urlTitle
+        this.message_device = messageDevice?.replace(/\s/g, "") ?? messageDevice
 
         if (![
             "pushover",
