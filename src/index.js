@@ -14,6 +14,14 @@ var Characteristic
 /** @type {import("homebridge").API} */
 var HomebridgeAPI
 
+/** @param {import("homebridge").API} homebridge */
+module.exports = (homebridge) => {
+    Service = homebridge.hap.Service
+    Characteristic = homebridge.hap.Characteristic
+    HomebridgeAPI = homebridge
+    homebridge.registerAccessory("homebridge-messenger", "HomebridgeMessenger", HomebridgeMessenger)
+}
+
 /**
  * @typedef {{ 
  *  type: 'email';
@@ -239,12 +247,4 @@ class HomebridgeMessenger {
             ...this.serviceMessagesSwitches,
         ]
     }
-}
-
-/** @param {import("homebridge").API} homebridge */
-module.exports = (homebridge) => {
-    Service = homebridge.hap.Service
-    Characteristic = homebridge.hap.Characteristic
-    HomebridgeAPI = homebridge
-    homebridge.registerAccessory("homebridge-messenger", "HomebridgeMessenger", HomebridgeMessenger)
 }
