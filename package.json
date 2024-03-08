@@ -1,6 +1,6 @@
 {
   "name": "@svobs/homebridge-messenger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email). Forked to add support for Pushover custom sounds",
   "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "license": "MIT",
