@@ -1,11 +1,14 @@
 {
   "name": "@svobs/homebridge-messenger",
+  "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "version": "1.0.2",
   "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email). Forked to add support for Pushover custom sounds",
-  "author": "Paul-Olivier Trudeau (p-o.ca) & Matt Svoboda",
   "license": "MIT",
-  "main": "index.js",
-  "private": false,
+  "main": "./dist/index.js",
+  "engines": {
+    "homebridge": ">=0.2.5",
+    "node": ">=6.0.0"
+  },
   "homepage": "https://github.com/svobs/homebridge-messenger",
   "bugs": {
     "url": "https://github.com/svobs/homebridge-messenger/issues"
@@ -15,11 +18,31 @@
     "url": "https://github.com/svobs/homebridge-messenger.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --out-dir dist --no-comments",
+    "check:lint": "eslint src",
+    "check:lint:fix": "eslint src --fix"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "ifttt-webhooks-channel": "^1.1.5",
+    "node-persist": "^2.1.0",
+    "nodemailer": "^6.4.17",
+    "pushover-notifications": "^1.2.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@stylistic/eslint-plugin-js": "^1.5.4",
+    "babel-preset-minify": "^0.5.2",
+    "eslint": "^8.56.0",
+    "homebridge": "^1.7.0"
   },
   "keywords": [
+    "homebridge-messenger",
     "homebridge-plugin",
     "homebridge",
+    "pushcut",
     "pushover",
     "sounds",
     "email",
@@ -27,16 +50,5 @@
     "ifttt",
     "maker",
     "webhooks"
-  ],
-  "engines": {
-    "node": ">=6.0.0",
-    "homebridge": ">=0.2.5"
-  },
-  "dependencies": {
-    "nodemailer": "^6.4.17",
-    "pushover-notifications": "^1.2.2",
-    "node-persist": "^2.1.0",
-    "ifttt-webhooks-channel": "^1.1.5",
-    "axios": "^0.21.1"
-  }
+  ]
 }

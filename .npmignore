@@ -1,1 +1,8 @@
+# Examples
 configuration-examples
+
+# Editor configs
+.vscode
+
+# Source code
+src
