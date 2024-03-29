@@ -60,37 +60,10 @@ module.exports = class PushoverMessenger {
         this.message_title = messageTitle
         this.message_text = messageText
         this.message_priority = messagePriority
-        this.message_sound = messageSound
+        this.message_sound = messageSound ?? "pushover"
         this.message_url = url
         this.message_urltitle = urlTitle
         this.message_device = messageDevice?.replace(/\s/g, "") ?? messageDevice
-
-        if (![
-            "pushover",
-            "bike",
-            "bugle",
-            "cashregister",
-            "classical",
-            "cosmic",
-            "falling",
-            "gamelan", 
-            "incoming",
-            "intermission",
-            "magic",
-            "mechanical",
-            "pianobar",
-            "siren",
-            "spacealarm",
-            "tugboat", 
-            "alien",
-            "climb",
-            "persistent",
-            "echo",
-            "updown",
-            "none",
-        ].includes(this.message_sound)) {
-            this.message_sound = "pushover"
-        }
     }
 
     getRecipient() {
