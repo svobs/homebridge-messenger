@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.0.2 (2024-03-08)
+* No code changes - just an update to this changelog. Please be patient - I'm still learning the ins & outs of npm!
+
+## 1.0.1 (2024-03-08)
+* Fix broken initial release. Verified that Pushover custom sounds do indeed work correctly now.
+
+## 1.0.0 (2024-01-22)
+* Initial attempt to fork with custom Pushover sound support. 
+* BAD RELEASE! Sound support was still broken due a bad publish. Do not use 1.0.0. Use 1.0.1 release instead.
+
+# Upstream Change Log
+
 All notable changes to this project will be documented in this file. This project uses [Semantic Versioning](https://semver.org/).
 
 ## 0.0.8 (2021-01-12)
