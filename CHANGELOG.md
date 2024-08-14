@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.3 (2024-08-14)
+* Add support for TTL field in Pushover.
+
 ## 1.0.2 (2024-03-08)
 * No code changes - just an update to this changelog. Please be patient - I'm still learning the ins & outs of npm!
 
