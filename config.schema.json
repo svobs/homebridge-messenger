@@ -3,7 +3,7 @@
   "pluginType": "accessory",
   "singular": false,
   "headerDisplay": "Homebridge plugin which allow users to send messages from HomeKit",
-  "footerDisplay": "For more details on this plugin, see: https://github.com/potrudeau/homebridge-messenger",
+  "footerDisplay": "For more details on this plugin, see: https://github.com/svobs/homebridge-messenger",
   "schema": {
     "type": "object",
     "properties": {
