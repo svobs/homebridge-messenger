@@ -1,0 +1,10 @@
+{
+  "files.eol": "\n",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.indentSize": 4,
+  "editor.rulers": [140],
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.enable": true
+}

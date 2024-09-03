@@ -2,8 +2,8 @@
   "pluginAlias": "HomebridgeMessenger",
   "pluginType": "accessory",
   "singular": false,
-  "headerDisplay": "Homebridge plugin which allow users to send messages from HomeKit",
-  "footerDisplay": "For more details on this plugin, see: https://github.com/svobs/homebridge-messenger",
+  "headerDisplay": "Send messages from HomeKit (Pushover, IFTTT, or email)",
+  "footerDisplay": "Add faux switches which send a message when triggered. More details: https://github.com/svobs/homebridge-messenger",
   "schema": {
     "type": "object",
     "properties": {
