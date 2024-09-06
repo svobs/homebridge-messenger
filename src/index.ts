@@ -10,37 +10,39 @@ import {
   Service,
 } from 'homebridge';
 
+import { PushOverMessenger } from './lib/pushover';
+import { EmailMessenger } from './lib/email';
+import { IftttMessenger } from './lib/ifttt';
+import { PushcutMessenger } from './lib/pushcut';
+import { name as packageName, version as packageVersion } from '../package.json';
+
+import nodePersist from 'node-persist';
+
 let hap: HAP;
 
-const PushOverMessenger = require('./lib/pushover.js');
-const EmailMessenger = require('./lib/email.js');
-const IftttMessenger = require('./lib/ifttt.js');
-const PushcutMessenger = require('./lib/pushcut.js');
-
-module.exports = (api: API) => {
+export default (api: API) => {
   hap = api.hap;
   api.registerAccessory('homebridge-messenger', HomebridgeMessenger);
 };
 
 
-class HomebridgeMessenger implements AccessoryPlugin {
-  private readonly api: API;
+export class HomebridgeMessenger implements AccessoryPlugin {
   private readonly log: Logging;
   private readonly config: AccessoryConfig;
   private readonly serviceMainSwitch: Service;
   private readonly cacheDirectory: string;
-  private readonly storage = require('node-persist');
+  private readonly storage = nodePersist;
 
   private isOn: CharacteristicValue = false;
-  private messages: [] = [];
-  private serviceMessagesSwitches: [] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private messages: any[] = [];
+  private serviceMessagesSwitches: Service[] = [];
   
   constructor(log: Logging, config: AccessoryConfig, api: API) {
-    this.api = api;
     this.log = log;
     this.config = config;
 
-    // Add main switch to Homebride
+    // Add main switch to Homebridge
     this.serviceMainSwitch = new hap.Service.Switch(this.config.name, '0');
     this.log('Added Main Switch : ' + this.config.name);
 
@@ -72,7 +74,7 @@ class HomebridgeMessenger implements AccessoryPlugin {
     for (let x = 0; x < this.messages.length; x++) {
 
       // Add switch for each message
-      const serviceMessageSwitch = new hap.Service.Switch(this.messages[x].name, x + 100);
+      const serviceMessageSwitch = new hap.Service.Switch(this.messages[x].name);
       this.log('Added ' + this.messages[x].type.toLowerCase() + ' : ' + this.messages[x].name);
 
       // Add event handler for each message
@@ -144,7 +146,7 @@ class HomebridgeMessenger implements AccessoryPlugin {
           // Configure message switch to be stateless : will be turned off after 100 ms.
           setTimeout(() => {
             serviceMessageSwitch.setCharacteristic(hap.Characteristic.On, false);
-          }, 100, this.time);
+          }, 100);
         }
 
         callback(null);
@@ -168,10 +170,10 @@ class HomebridgeMessenger implements AccessoryPlugin {
   getServices () {
     // Load configuration information for devices
     const informationService = new hap.Service.AccessoryInformation()
-      .setCharacteristic(hap.Characteristic.Manufacturer, require('./package.json').name)
-      .setCharacteristic(hap.Characteristic.SerialNumber, require('./package.json').name)
-      .setCharacteristic(hap.Characteristic.Model, require('./package.json').name)
-      .setCharacteristic(hap.Characteristic.FirmwareRevision, require('./package.json').version);
+      .setCharacteristic(hap.Characteristic.Manufacturer, packageName)
+      .setCharacteristic(hap.Characteristic.SerialNumber, packageName)
+      .setCharacteristic(hap.Characteristic.Model, packageName)
+      .setCharacteristic(hap.Characteristic.FirmwareRevision, packageVersion);
 
     // Event handler for main switch
     this.serviceMainSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, this.setOnCharacteristicHandler.bind(this)); 
