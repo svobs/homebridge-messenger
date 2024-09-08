@@ -10,11 +10,10 @@ import {
   Service,
 } from 'homebridge';
 
-import { PushOverMessenger } from './lib/pushover';
-import { EmailMessenger } from './lib/email';
-import { IftttMessenger } from './lib/ifttt';
-import { PushcutMessenger } from './lib/pushcut';
-import { name as packageName, version as packageVersion } from '../package.json';
+import { PushOverMessenger } from './lib/pushover.js';
+import { EmailMessenger } from './lib/email.js';
+import { IftttMessenger } from './lib/ifttt.js';
+import { PushcutMessenger } from './lib/pushcut.js';
 
 import nodePersist from 'node-persist';
 
@@ -170,10 +169,10 @@ export class HomebridgeMessenger implements AccessoryPlugin {
   getServices () {
     // Load configuration information for devices
     const informationService = new hap.Service.AccessoryInformation()
-      .setCharacteristic(hap.Characteristic.Manufacturer, packageName)
-      .setCharacteristic(hap.Characteristic.SerialNumber, packageName)
-      .setCharacteristic(hap.Characteristic.Model, packageName)
-      .setCharacteristic(hap.Characteristic.FirmwareRevision, packageVersion);
+      .setCharacteristic(hap.Characteristic.Manufacturer, 'HomeBridge Plugin')
+      .setCharacteristic(hap.Characteristic.SerialNumber, 'N/A')
+      .setCharacteristic(hap.Characteristic.Model, 'N/A')
+      .setCharacteristic(hap.Characteristic.FirmwareRevision, '1.1.0');
 
     // Event handler for main switch
     this.serviceMainSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, this.setOnCharacteristicHandler.bind(this)); 

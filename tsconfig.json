@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
+    "module": "ES2022",
     "moduleResolution": "node",
     "lib": [
       "es2015",
@@ -13,19 +13,18 @@
     "declaration": false,
     "declarationMap": false,
     "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
+    "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true
   },
   "include": [
-    "src/"
-  ],
-  "exclude": [
-    "**/*.spec.ts"
+    "eslint.config.js",
+    "src"
   ]
 }

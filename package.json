@@ -2,10 +2,11 @@
   "name": "@svobs/homebridge-messenger",
   "version": "1.0.3",
   "type": "module",
+  "private": "false",
   "description": "Send HomeKit messages with HomeBridge (Pushover / IFTTT / Email). Forked to add support for Pushover custom sounds & TTL",
   "author": "Matt Svoboda & Paul-Olivier Trudeau (p-o.ca)",
   "license": "MIT",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "homepage": "https://github.com/svobs/homebridge-messenger",
   "bugs": {
     "url": "https://github.com/svobs/homebridge-messenger/issues"
@@ -22,13 +23,6 @@
     "watch": "npm run build && npm link && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "files": [
-    "LICENSE",
-    "CHANGELOG.md",
-    "README.md",
-    "config.schema.json",
-    "dist"
-  ],
   "keywords": [
     "homebridge-plugin",
     "homebridge",
