@@ -244,14 +244,14 @@
               }
             },
             "url": {
-              "title": "Url",
+              "title": "URL",
               "type": "string",
               "default": "",
               "required": false,
               "format": "hostname"
             },
             "urltitle": {
-              "title": "Url Title",
+              "title": "URL Title",
               "type": "string",
               "default": "",
               "required": false
