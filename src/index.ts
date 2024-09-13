@@ -21,7 +21,7 @@ let hap: HAP;
 
 export default (api: API) => {
   hap = api.hap;
-  api.registerAccessory('homebridge-messenger', HomebridgeMessenger);
+  api.registerAccessory('HomebridgeMessenger', HomebridgeMessenger);
 };
 
 
@@ -43,7 +43,7 @@ export class HomebridgeMessenger implements AccessoryPlugin {
 
     // Add main switch to Homebridge
     this.serviceMainSwitch = new hap.Service.Switch(this.config.name, '0');
-    this.log('Added Main Switch : ' + this.config.name);
+    this.log('Added Main Switch: ' + this.config.name);
 
     // Initialize cache
     this.cacheDirectory = api.user.persistPath();
@@ -53,13 +53,11 @@ export class HomebridgeMessenger implements AccessoryPlugin {
     const cachedState = this.storage.getItemSync(this.config.name);
     if((cachedState === undefined) || (cachedState === false)) { // If not in cache
       this.isOn = false;
-      this.serviceMainSwitch.setCharacteristic(hap.Characteristic.On, false);
-      this.log('Main Switch status'+ ' : ' + false);
     } else { // If in cache
       this.isOn = true;
-      this.serviceMainSwitch.setCharacteristic(hap.Characteristic.On, true);
-      this.log('Main Switch status'+ ' : ' + true);
     }
+    this.serviceMainSwitch.setCharacteristic(hap.Characteristic.On, this.isOn);
+    this.log('Main Switch status' + ': ' + (this.isOn ? 'ON' : 'OFF'));
 
     // Load configured messages
     this.loadMessages();
@@ -73,8 +71,10 @@ export class HomebridgeMessenger implements AccessoryPlugin {
     for (let x = 0; x < this.messages.length; x++) {
 
       // Add switch for each message
-      const serviceMessageSwitch = new hap.Service.Switch(this.messages[x].name);
-      this.log('Added ' + this.messages[x].type.toLowerCase() + ' : ' + this.messages[x].name);
+      const displayName = this.messages[x].name;
+      const subtype: string = String(x + 100);
+      const serviceMessageSwitch = new hap.Service.Switch(displayName, subtype);
+      this.log('Added msg: [' + this.messages[x].type.toLowerCase() + '] ' + this.messages[x].name);
 
       // Add event handler for each message
       serviceMessageSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, (value: CharacteristicValue, 
@@ -132,14 +132,14 @@ export class HomebridgeMessenger implements AccessoryPlugin {
                           
               // Invalid message type
             default:
-              throw new Error(this.messages[x].name  + ' : Invalid type value.');
+              throw new Error('In message ' + this.messages[x].name  + ': Invalid type value.');
               break;
             }
             
-            this.log(this.messages[x].name  + ' : Message sent to ' + message.getRecipient());
+            this.log('In message ' + this.messages[x].name  + ': Message sent to ' + message.getRecipient());
             message.sendMessage(); 
           } else { // If main switch status if Off
-            this.log(this.messages[x].name + ' : Message not sent. Master switch is off.');
+            this.log('In message ' + this.messages[x].name + ': Message not sent. Master switch is off.');
           }
 
           // Configure message switch to be stateless : will be turned off after 100 ms.

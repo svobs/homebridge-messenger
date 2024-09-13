@@ -19,7 +19,7 @@
     "esModuleInterop": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": false,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true
   },
