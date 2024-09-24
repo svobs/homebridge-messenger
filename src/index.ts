@@ -43,7 +43,7 @@ export class HomebridgeMessenger implements AccessoryPlugin {
 
     // Add main switch to Homebridge
     this.serviceMainSwitch = new hap.Service.Switch(this.config.name, '0');
-    this.log('Added Main Switch: ' + this.config.name);
+    this.log(`Added Main Switch: ${this.config.name}`);
 
     // Initialize cache
     this.cacheDirectory = api.user.persistPath();
@@ -71,18 +71,19 @@ export class HomebridgeMessenger implements AccessoryPlugin {
     for (let x = 0; x < this.messages.length; x++) {
 
       // Add switch for each message
-      const displayName = this.messages[x].name;
+      const msgSwitch = this.messages[x];
       const subtype: string = String(x + 100);
-      const serviceMessageSwitch = new hap.Service.Switch(displayName, subtype);
-      this.log('Added msg: [' + this.messages[x].type.toLowerCase() + '] ' + this.messages[x].name);
+      const serviceMessageSwitch = new hap.Service.Switch(msgSwitch.name, subtype);
+      this.log(`Added switch #${x}: name=[${msgSwitch.name}], type=${msgSwitch.type.toLowerCase()}, uid=${subtype}`);
 
       // Add event handler for each message
-      serviceMessageSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, (value: CharacteristicValue, 
-        callback: CharacteristicSetCallback) => {
+      const listener = (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
+        //this.log(`[${msgSwitch.name}] Entered listenerFunc (value: ${value}, masterIsOn: ${this.isOn})`);
         if (value===true) { // If message switch status is On
           if (this.isOn) { // If main switch status if On
+
             let message;
-            switch(this.messages[x].type.toLowerCase()) {
+            switch(msgSwitch.type.toLowerCase()) {
 
             // Message type is email
             case 'email': 
@@ -92,54 +93,53 @@ export class HomebridgeMessenger implements AccessoryPlugin {
                 this.config.services.email.smtpSecure, 
                 this.config.services.email.smtpUsername, 
                 this.config.services.email.smtpPassword, 
-                this.messages[x].name,
-                this.messages[x].text, 
-                this.messages[x].recipients);
+                msgSwitch.name,
+                msgSwitch.text, 
+                msgSwitch.recipients);
               break;
 
               // Message type is pushover
             case 'pushover':
               message = new PushOverMessenger(this.config.services.pushover.user, 
                 this.config.services.pushover.token,
-                this.messages[x].name,
-                this.messages[x].text,
-                this.messages[x].priority,
-                this.messages[x].device,
-                this.messages[x].ttl,
-                this.messages[x].sound,
-                this.messages[x].url,
-                this.messages[x].urltitle);
+                msgSwitch.name,
+                msgSwitch.text,
+                msgSwitch.priority,
+                msgSwitch.device,
+                msgSwitch.ttl,
+                msgSwitch.sound,
+                msgSwitch.url,
+                msgSwitch.urltitle);
               break;
 
               // Message type is ifttt
             case 'ifttt':
               message = new IftttMessenger(this.config.services.ifttt.key,
-                this.messages[x].event,
-                this.messages[x].value1,
-                this.messages[x].value2,
-                this.messages[x].value3);
+                msgSwitch.event,
+                msgSwitch.value1,
+                msgSwitch.value2,
+                msgSwitch.value3);
               break;  
 
               // Message type is pushcut
             case 'pushcut':
               message = new PushcutMessenger(this.config.services.pushcut.apikey,
-                this.messages[x].notification,
-                this.messages[x].title,
-                this.messages[x].text,
-                this.messages[x].input,
-                this.messages[x].actions);
+                msgSwitch.notification,
+                msgSwitch.title,
+                msgSwitch.text,
+                msgSwitch.input,
+                msgSwitch.actions);
               break;       
                           
               // Invalid message type
             default:
-              throw new Error('In message ' + this.messages[x].name  + ': Invalid type value.');
-              break;
+              throw new Error(`[${msgSwitch.name}] Invalid type value.`);
             }
             
-            this.log('In message ' + this.messages[x].name  + ': Message sent to ' + message.getRecipient());
-            message.sendMessage(); 
+            message.sendMessage();
+            this.log(`[${msgSwitch.name}] Message sent to ${message.getRecipient()}`);
           } else { // If main switch status if Off
-            this.log('In message ' + this.messages[x].name + ': Message not sent. Master switch is off.');
+            this.log(`[${msgSwitch.name}] Message not sent. Master switch is off.`);
           }
 
           // Configure message switch to be stateless : will be turned off after 100 ms.
@@ -149,19 +149,22 @@ export class HomebridgeMessenger implements AccessoryPlugin {
         }
 
         callback(null);
-      });
+      };
+
+      serviceMessageSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, listener);
 
       // Add message switch to array. Array will be loaded in getServices()
       this.serviceMessagesSwitches.push(serviceMessageSwitch);
     }
-  
+
+    this.log(`Finished adding ${this.serviceMessagesSwitches.length} switches`);
   }
 
 
   setOnCharacteristicHandler(value: CharacteristicValue, callback: CharacteristicSetCallback) {
     this.isOn = value;
     this.storage.setItemSync(this.config.name, value);
-    this.log('Main Switch status'+ ' : ' + value);
+    this.log(`Main Switch status: ${value}`);
     callback(null);
   }
 
