@@ -175,7 +175,7 @@ export class HomebridgeMessenger implements AccessoryPlugin {
       .setCharacteristic(hap.Characteristic.Manufacturer, 'HomeBridge Plugin')
       .setCharacteristic(hap.Characteristic.SerialNumber, 'N/A')
       .setCharacteristic(hap.Characteristic.Model, 'N/A')
-      .setCharacteristic(hap.Characteristic.FirmwareRevision, '1.1.0');
+      .setCharacteristic(hap.Characteristic.FirmwareRevision, '1.0.4');  // should match version in package.json
 
     // Event handler for main switch
     this.serviceMainSwitch.getCharacteristic(hap.Characteristic.On).on(CharacteristicEventTypes.SET, this.setOnCharacteristicHandler.bind(this)); 

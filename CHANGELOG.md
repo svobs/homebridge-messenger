@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.0.4 (2024-09-24)
+* Modernize project structure, rewrite in TypeScript, to prepare for verification / HomeBridge 2.0. Log messages will look slightly different but there should be no changes to functionality at all.
+
 ## 1.0.3 (2024-08-14)
 * Add support for TTL field in Pushover.
 
